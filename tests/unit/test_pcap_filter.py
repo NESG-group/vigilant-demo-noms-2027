@@ -18,7 +18,7 @@ from vigilant.mcp.tools.filter_pcaps import (
 )
 from vigilant.mcp.tools.get_pcaps import CaptureNotFoundError
 
-FIXTURES = Path(__file__).parents[1] / "fixtures/pcaps"
+FIXTURES = Path(__file__).parents[2] / "data"
 
 
 def _fake_tshark(tmp_path: Path, stdout: str = "", stderr: str = "", exit_code: int = 0, sleep: float = 0) -> Path:

@@ -36,7 +36,7 @@ async def test_ingest_pcap_resolves_staged_reference(tmp_path: Path, monkeypatch
 
     monkeypatch.setattr(ingest_module, "_persist_to_datalake", fake_persist_to_datalake)
 
-    capture = Path(__file__).parents[1] / "fixtures/pcaps/arp-icmp.pcapng"
+    capture = Path(__file__).parents[2] / "data/arp-icmp.pcapng"
     ref = pcap_utils.stage_bytes(capture.read_bytes())
 
     result = await ingest_module.ingest_pcap(ref)
@@ -62,7 +62,7 @@ async def test_ingest_pcap_reports_datalake_registration_failure(
 
     monkeypatch.setattr(ingest_module, "_persist_to_datalake", failing_persist_to_datalake)
 
-    capture = Path(__file__).parents[1] / "fixtures/pcaps/arp-icmp.pcapng"
+    capture = Path(__file__).parents[2] / "data/arp-icmp.pcapng"
     ref = pcap_utils.stage_bytes(capture.read_bytes())
 
     result = await ingest_module.ingest_pcap(ref)
@@ -79,7 +79,7 @@ def test_stage_pcap_attachment_resolves_open_webui_file_id(tmp_path: Path, monke
     monkeypatch.setattr(pcap_utils, "OPEN_WEBUI_UPLOADS_ROOT", uploads_root)
     monkeypatch.setattr(pcap_utils, "STAGING_ROOT", staging_root)
 
-    capture = Path(__file__).parents[1] / "fixtures/pcaps/arp-icmp.pcapng"
+    capture = Path(__file__).parents[2] / "data/arp-icmp.pcapng"
     file_id = "a828a4b2-3023-4603-af46-cfd2e3ec96d5"
     uploads_root.mkdir()
     (uploads_root / f"{file_id}_arp-icmp.pcapng").write_bytes(capture.read_bytes())
@@ -108,7 +108,7 @@ def test_stage_pcap_id_embedded_in_open_webui_text(tmp_path: Path, monkeypatch: 
     monkeypatch.setattr(pcap_utils, "OPEN_WEBUI_UPLOADS_ROOT", uploads_root)
     monkeypatch.setattr(pcap_utils, "STAGING_ROOT", staging_root)
 
-    capture = Path(__file__).parents[1] / "fixtures/pcaps/arp-icmp.pcapng"
+    capture = Path(__file__).parents[2] / "data/arp-icmp.pcapng"
     file_id = "e0c7984a-c133-4924-926c-ca69cd1f632d"
     uploads_root.mkdir()
     (uploads_root / f"{file_id}_arp-icmp.pcapng").write_bytes(capture.read_bytes())

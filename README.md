@@ -51,8 +51,8 @@ make up-ui                    # ollama + hermes + backend + Open WebUI on :3000
 make ollama-model             # pulls qwen2.5:72b if no model is installed
 docker compose exec vigilant-backend alembic upgrade head   # datalake schema
 
-# register a capture (returns capture_id)
-curl -F file=@tests/fixtures/pcaps/arp-icmp.pcapng http://localhost:8000/v1/datalake/ingest
+# register a capture (returns capture_id); see data/README.md for what each one contains
+for f in data/*.pcapng; do curl -F file=@$f http://localhost:8000/v1/datalake/ingest; done
 ```
 
 Ask in Open WebUI (http://localhost:3000), e.g. *"Is there ARP spoofing in
