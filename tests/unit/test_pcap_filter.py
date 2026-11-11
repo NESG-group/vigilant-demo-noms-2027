@@ -281,11 +281,14 @@ async def test_mcp_tools_report_invalid_and_unknown_ids(monkeypatch: pytest.Monk
 
 
 @pytest.mark.skipif(shutil.which("tshark") is None, reason="tshark not installed")
-async def test_real_tshark_on_fixture(monkeypatch: pytest.MonkeyPatch, capture_id: uuid.UUID) -> None:
+async def test_real_tshark_on_fixture(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capture_id: uuid.UUID) -> None:
     """End to end against the real binary and the ARP/ICMP fixture."""
+    # Copied to tmp_path: distro AppArmor profiles for tshark may deny reads under the checkout directory.
+    local_copy = tmp_path / "arp-icmp.pcapng"
+    shutil.copy(FIXTURES / "arp-icmp.pcapng", local_copy)
 
     async def fixture_path(_capture_id: uuid.UUID) -> str:
-        return str(FIXTURES / "arp-icmp.pcapng")
+        return str(local_copy)
 
     monkeypatch.setattr(filter_pcaps, "get_capture_file_path", fixture_path)
 
