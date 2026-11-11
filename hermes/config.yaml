@@ -1,0 +1,30 @@
+model:
+  default: qwen2.5:72b
+  provider: custom
+  base_url: http://ollama:11434/v1
+  context_length: 65536
+  ollama_num_ctx: 65536
+_config_version: 41
+
+# MCP tools served by vigilant-backend (pcap_* views, list_captures, ingest_pcap).
+mcp_servers:
+  vigilant-network:
+    url: http://vigilant-backend:8000/mcp
+    transport: streamable-http
+
+# Only file + skills for the API server; no shell, web or code execution.
+platform_toolsets:
+  cli:
+    - file
+    - kanban
+    - skills
+  api_server:
+    - file
+    - skills
+
+auxiliary:
+  background_review:
+    enabled: false
+tools:
+  tool_search:
+    enabled: "off"
